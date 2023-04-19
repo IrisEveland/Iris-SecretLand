@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="CT Neck" name="dcterms.title"/>
+    <meta content="CT Neck template :: Authored by Phillips CD, et al." name="dcterms.description"/>
+    <meta content="http://www.radreport.org/template/0000013" name="dcterms.identifier"/>
+    <meta content="en" name="dcterms.language"/>
+    <meta content="IMAGE_REPORT_TEMPLATE" name="dcterms.type"/>
+    <meta content="Radiological Society of North America (RSNA)" name="dcterms.publisher"/>
+    <meta content="May be used gratis, subject to license agreement" name="dcterms.rights"/>
+    <meta content="http://www.radreport.org/license.pdf" name="dcterms.license"/>
+    <meta content="2012-03-28" name="dcterms.date"/>
+    <meta content="Phillips CD, et al." name="dcterms.creator"/>
+    <meta content="Hong Y [coder]" name="dcterms.contributor"/>
+    <meta content="Kahn CE Jr [editor]" name="dcterms.contributor"/>
+    <meta content="American Society of Head and Neck Radiology (ASHNR)" name="dcterms.contributor"/>
+    <title>CT Neck</title>
+    <script type="text/javascript" src="AAA.js"></script>
+    <script>
+        function Submit() {
+            FindingObservation.component[0].valueString = document.getElementsByName("Orbits paranasal sinuses skull base")[0].value;
+            FindingObservation.component[1].valueString = document.getElementsByName("Nasopharynx")[0].value;
+            FindingObservation.component[2].valueString = document.getElementsByName("Suprahyoid neck")[0].value;
+            FindingObservation.component[3].valueString = document.getElementsByName("Infrahyoid neck")[0].value;
+            FindingObservation.component[4].valueString = document.getElementsByName("Thyroid")[0].value;
+            FindingObservation.component[5].valueString = document.getElementsByName("Thoracic inlet")[0].value;
+            FindingObservation.component[6].valueString = document.getElementsByName("Lymph nodes")[0].value;
+            FindingObservation.component[7].valueString = document.getElementsByName("Vascular structures")[0].value;
+            FindingObservation.component[8].valueString = document.getElementsByName("Other findings")[0].value;
+
+            postData(FindingObservation, "Observation")
+        }
+        function postData(jsonString, type) {
+        var xhttp = new XMLHttpRequest();
+        var fhirUrl= "https://hapi.fhir.org/baseR4";
+        var url = fhirUrl +"/"+type;
+        xhttp.open("POST", url, false);
+        xhttp.setRequestHeader("Content-type", 'application/json+fhir');
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) // && this.status == 201) 
+            {
+                ret = JSON.parse(this.responseText);
+                alert(this.responseText);
+            }
+        };
+        var data = JSON.stringify(jsonString);
+        xhttp.send(data);
+    }
+    </script>
+</head>
+
+<body>
+    <section data-section-name="Findings">
+        <header class="level1">Findings</header>
+        <p>
+            <label for="T13_7">Orbits, paranasal sinuses, and skull base: </label>
+            <input type="text" id="T13_7" name="Orbits paranasal sinuses skull base" value="Normal. "/>
+        </p>
+        <p>
+            <label for="T13_13">Nasopharynx: </label>
+            <input type="text" id="T13_13" name="Nasopharynx" value="Normal. "/>
+        </p>
+        <p>
+            <label for="T13_15">Suprahyoid neck: </label>
+            <input type="text" id="T13_15" name="Suprahyoid neck" value="Normal oropharynx, oral cavity, parapharyngeal space, and retropharyngeal space. "/>
+        </p>
+        <p>
+            <label for="T13_25">Infrahyoid neck: </label>
+            <input type="text" id="T13_25" name="Infrahyoid neck" value="Normal larynx, hypopharynx, and supraglottis. "/>
+        </p>
+        <p>
+            <label for="T13_33">Thyroid: </label>
+            <input type="text" id="T13_33" name="Thyroid" value="Normal. "/>
+        </p>
+        <p>
+            <label for="T13_35">Thoracic inlet: </label>
+            <input type="text" id="T13_35" name="Thoracic inlet" value="Normal lung apices and brachial plexus."/>
+        </p>
+        <p>
+            <label for="T13_41">Lymph nodes</label>
+            <input type="text" id="T13_41" name="Lymph nodes" value="Normal. No lymphadenopathy. "/>
+        </p>
+        <p>
+            <label for="T13_43">Vascular structures: </label>
+            <input type="text" id="T13_43" name="Vascular structures" value="Normal. "/>
+        </p>
+        <p>
+            <label for="T13_44">Other findings: </label>
+            <input type="text" id="T13_44" name="Other findings" value="None. "/>
+        </p>
+    </section>
+    <button onclick="Submit()">Submit</button>
+</body>
+</html>
